@@ -25,6 +25,12 @@ function clearGrid(){
     });
 }
 
+function randomColor(){
+    return `rgb(${Math.random() * 255},
+                ${Math.random() * 255}, 
+                ${Math.random() * 255})`;
+}
+
 function createGrid(grid_count){
     for (i = 0; i < (grid_count*grid_count); i++){
         let square = document.createElement("div");
@@ -32,9 +38,8 @@ function createGrid(grid_count){
                         box-sizing: border-box;
                         flex: auto;
                         width: ${GRID_SIZE/grid_count}px;`;
-
         square.addEventListener("mouseover", function(){
-            square.style.backgroundColor = "black";
+            square.style.backgroundColor = randomColor();
         });
 
         container.appendChild(square);
