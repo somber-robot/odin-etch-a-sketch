@@ -9,5 +9,10 @@ for (i = 0; i < (grid_count*grid_count); i++){
                     box-sizing: border-box;
                     flex: auto;
                     width: ${GRID_SIZE/grid_count}px;`;
+
+    square.addEventListener("mouseover", function(){
+        square.style.backgroundColor = "black";
+    });
+
     container.appendChild(square);
 }
