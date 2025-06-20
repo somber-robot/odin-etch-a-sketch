@@ -39,7 +39,12 @@ function createGrid(grid_count){
                         flex: auto;
                         width: ${GRID_SIZE/grid_count}px;`;
         square.addEventListener("mouseover", function(){
+            if (square.style.backgroundColor !== "") {
+                square.style.opacity = Math.min(1.0, +square.style.opacity+0.1);
+                return;
+            }
             square.style.backgroundColor = randomColor();
+            square.style.opacity = 0.1;
         });
 
         container.appendChild(square);
