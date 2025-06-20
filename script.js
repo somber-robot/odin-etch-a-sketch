@@ -1,18 +1,49 @@
 const GRID_SIZE = 480;
 const container = document.querySelector("#container");
 
+const newGridBtn = document.querySelector("#new-grid");
+const refreshBtn = document.querySelector("#refresh");
+
 let grid_count = 16;
 
-for (i = 0; i < (grid_count*grid_count); i++){
-    let square = document.createElement("div");
-    square.style = `border: 1px solid red; 
-                    box-sizing: border-box;
-                    flex: auto;
-                    width: ${GRID_SIZE/grid_count}px;`;
+newGridBtn.addEventListener("click", function() {
+    temp = grid_count;
+    grid_count = Math.min(100, parseInt(prompt("Enter grid length: ", "")));
+    if (Number.isNaN(grid_count)) {
+        grid_count = temp;
+        return;
+    }
+    clearGrid();
+    createGrid(grid_count);
+});
 
-    square.addEventListener("mouseover", function(){
-        square.style.backgroundColor = "black";
+refreshBtn.addEventListener("click", refreshGrid);
+
+function clearGrid(){
+    Array.from(container.childNodes).forEach(square => {
+        square.parentNode.removeChild(square);
     });
-
-    container.appendChild(square);
 }
+
+function createGrid(grid_count){
+    for (i = 0; i < (grid_count*grid_count); i++){
+        let square = document.createElement("div");
+        square.style = `border: 1px solid lightgray; 
+                        box-sizing: border-box;
+                        flex: auto;
+                        width: ${GRID_SIZE/grid_count}px;`;
+
+        square.addEventListener("mouseover", function(){
+            square.style.backgroundColor = "black";
+        });
+
+        container.appendChild(square);
+    }
+}
+
+function refreshGrid(){
+    clearGrid();
+    createGrid(grid_count);
+}
+
+createGrid(grid_count);

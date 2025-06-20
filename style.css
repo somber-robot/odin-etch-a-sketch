@@ -6,3 +6,8 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+#ui{
+    text-align: center;
+    margin: 10px;
+}
