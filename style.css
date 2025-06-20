@@ -1,0 +1,8 @@
+#container{
+    border: 1px solid black;
+    width: 480px;
+    height: 480px;
+    justify-self: center;
+    display: flex;
+    flex-wrap: wrap;
+}
