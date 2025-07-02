@@ -3,8 +3,10 @@ const container = document.querySelector("#container");
 
 const newGridBtn = document.querySelector("#new-grid");
 const refreshBtn = document.querySelector("#refresh");
+const toggleBtn = document.querySelector("#toggle-grid");
 
 let grid_count = 16;
+let border = true;
 
 newGridBtn.addEventListener("click", function() {
     temp = grid_count;
@@ -18,6 +20,7 @@ newGridBtn.addEventListener("click", function() {
 });
 
 refreshBtn.addEventListener("click", refreshGrid);
+toggleBtn.addEventListener("click", toggleGrid);
 
 function clearGrid(){
     Array.from(container.childNodes).forEach(square => {
@@ -54,6 +57,20 @@ function createGrid(grid_count){
 function refreshGrid(){
     clearGrid();
     createGrid(grid_count);
+}
+
+function toggleGrid(){
+    if (border){
+        container.childNodes.forEach(square => {
+            square.style.border = "none";
+            border = false;
+        });
+    }else{
+        container.childNodes.forEach(square => {
+            square.style.border = "1px solid lightgray";
+            border = true;
+        });
+    }
 }
 
 createGrid(grid_count);
