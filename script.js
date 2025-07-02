@@ -9,12 +9,9 @@ let grid_count = 16;
 let border = true;
 
 newGridBtn.addEventListener("click", function() {
-    temp = grid_count;
-    grid_count = Math.min(100, parseInt(prompt("Enter grid length: ", "")));
-    if (Number.isNaN(grid_count)) {
-        grid_count = temp;
-        return;
-    }
+    temp = Math.min(100, parseInt(prompt("Enter grid length: ", "")));
+    if (Number.isNaN(temp)) return;
+    grid_count = temp < 1 ? 1 : temp;
     clearGrid();
     createGrid(grid_count);
 });
@@ -37,7 +34,8 @@ function randomColor(){
 function createGrid(grid_count){
     for (i = 0; i < (grid_count*grid_count); i++){
         let square = document.createElement("div");
-        square.style = `border: 1px solid lightgray; 
+        let border_val = border ? "1px solid lightgray" : "none";
+        square.style = `border: ${border_val}; 
                         box-sizing: border-box;
                         flex: auto;
                         width: ${GRID_SIZE/grid_count}px;`;
@@ -49,9 +47,9 @@ function createGrid(grid_count){
             square.style.backgroundColor = randomColor();
             square.style.opacity = 0.1;
         });
-
         container.appendChild(square);
     }
+    newGridBtn.innerHTML = grid_count + " x " + grid_count;
 }
 
 function refreshGrid(){
