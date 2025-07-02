@@ -8,6 +8,7 @@ const toggleBtn = document.querySelector("#toggle-grid");
 const modeBtn = document.querySelector("#mode");
 const penBtn = document.querySelector("#pen");
 const thickBtn = document.querySelector("#thick");
+const saveBtn = document.querySelector("#save");
 
 const picker = document.querySelector("#picker");
 picker.style.display = "none";
@@ -24,6 +25,7 @@ toggleBtn.addEventListener("click", toggleGrid);
 modeBtn.addEventListener("click", toggleColorMode);
 penBtn.addEventListener("click", togglePen);
 thickBtn.addEventListener("click", toggleThick);
+saveBtn.addEventListener("click", saveImage);
 
 function clearGrid(){
     Array.from(container.childNodes).forEach(square => {
@@ -129,6 +131,17 @@ function toggleThick(){
         thickBtn.innerHTML = "Shade";
         thick = "shade";
     }
+}
+
+function saveImage(){
+    html2canvas(container, {allowTaint: true}).then(function (canvas){
+        let link = document.createElement("a");
+        document.body.appendChild(link);
+        link.download = "sketch.jpg";
+        link.href = canvas.toDataURL();
+        link.target = "_blank";
+        link.click();
+    });
 }
 
 createGrid(grid_count);
