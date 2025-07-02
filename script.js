@@ -7,6 +7,7 @@ const refreshBtn = document.querySelector("#refresh");
 const toggleBtn = document.querySelector("#toggle-grid");
 const modeBtn = document.querySelector("#mode");
 const penBtn = document.querySelector("#pen");
+const thickBtn = document.querySelector("#thick");
 
 const picker = document.querySelector("#picker");
 picker.style.display = "none";
@@ -15,12 +16,14 @@ let grid_count = 16;
 let border = true;
 let mode = "rainbow";
 let pen = "draw";
+let thick = "shade";
 
 newGridBtn.addEventListener("click", resizeGrid);
 refreshBtn.addEventListener("click", refreshGrid);
 toggleBtn.addEventListener("click", toggleGrid);
 modeBtn.addEventListener("click", toggleColorMode);
 penBtn.addEventListener("click", togglePen);
+thickBtn.addEventListener("click", toggleThick);
 
 function clearGrid(){
     Array.from(container.childNodes).forEach(square => {
@@ -36,31 +39,22 @@ function randomColor(){
 
 function colorCell(){
     if (pen === "draw"){
-        if (mode === "rainbow"){
-            if (this.style.backgroundColor !== "") {
-                this.style.opacity = Math.min(1.0, +this.style.opacity+0.1);
-                return;
-            }
-            this.style.backgroundColor = randomColor();
-            this.style.opacity = 0.1;
-        }else{
-            if (this.style.backgroundColor !== ""){
-                this.style.opacity = Math.min(1.0, +this.style.opacity+0.1);
-                return;
-            }
-            this.style.backgroundColor = picker.value;
-            this.style.opacity = 0.1;
+        if (this.style.backgroundColor !== "") {
+            this.style.opacity = (thick === "shade") 
+                                ? Math.min(1.0, +this.style.opacity+0.1)
+                                : 1.0;
+            return;
         }
+        this.style.backgroundColor = (mode === "rainbow") ? randomColor() : picker.value;
+        this.style.opacity = (thick === "shade") ? 0.1 : 1.0;
     }else{
         if (this.style.backgroundColor === "") return;
-        let alpha = Math.max(0, +this.style.opacity-0.1);
-        if (alpha == 0) {
+        let alpha = (thick === "shade") ? Math.max(0, +this.style.opacity-0.1) : 0;
+        if (alpha === 0){
             this.style.backgroundColor = "";
-            this.style.opacity = 1.0;
+            alpha = 1.0;
         }
-        else {
-            this.style.opacity = alpha;
-        }
+        this.style.opacity = alpha;
     }
 }
 
@@ -124,6 +118,16 @@ function togglePen(){
     }else{
         penBtn.innerHTML = "Draw";
         pen = "draw";
+    }
+}
+
+function toggleThick(){
+    if (thick === "shade"){
+        thickBtn.innerHTML = "Solid";
+        thick = "solid";
+    }else{
+        thickBtn.innerHTML = "Shade";
+        thick = "shade";
     }
 }
 
