@@ -6,26 +6,21 @@ const newGridBtn = document.querySelector("#new-grid");
 const refreshBtn = document.querySelector("#refresh");
 const toggleBtn = document.querySelector("#toggle-grid");
 const modeBtn = document.querySelector("#mode");
+const penBtn = document.querySelector("#pen");
 
-const picker = document.createElement("input");
-picker.type = "color";
+const picker = document.querySelector("#picker");
+picker.style.display = "none";
 
 let grid_count = 16;
 let border = true;
 let mode = "rainbow";
-let color = "black";
+let pen = "draw";
 
-newGridBtn.addEventListener("click", function() {
-    temp = Math.min(100, parseInt(prompt("Enter grid length: ", "")));
-    if (Number.isNaN(temp)) return;
-    grid_count = temp < 1 ? 1 : temp;
-    clearGrid();
-    createGrid(grid_count);
-});
-
+newGridBtn.addEventListener("click", resizeGrid);
 refreshBtn.addEventListener("click", refreshGrid);
 toggleBtn.addEventListener("click", toggleGrid);
-modeBtn.addEventListener("click", toggleDrawMode);
+modeBtn.addEventListener("click", toggleColorMode);
+penBtn.addEventListener("click", togglePen);
 
 function clearGrid(){
     Array.from(container.childNodes).forEach(square => {
@@ -40,20 +35,32 @@ function randomColor(){
 }
 
 function colorCell(){
-    if (mode === "rainbow"){
-        if (this.style.backgroundColor !== "") {
-            this.style.opacity = Math.min(1.0, +this.style.opacity+0.1);
-            return;
+    if (pen === "draw"){
+        if (mode === "rainbow"){
+            if (this.style.backgroundColor !== "") {
+                this.style.opacity = Math.min(1.0, +this.style.opacity+0.1);
+                return;
+            }
+            this.style.backgroundColor = randomColor();
+            this.style.opacity = 0.1;
+        }else{
+            if (this.style.backgroundColor !== ""){
+                this.style.opacity = Math.min(1.0, +this.style.opacity+0.1);
+                return;
+            }
+            this.style.backgroundColor = picker.value;
+            this.style.opacity = 0.1;
         }
-        this.style.backgroundColor = randomColor();
-        this.style.opacity = 0.1;
     }else{
-        if (this.style.backgroundColor !== ""){
-            this.style.opacity = Math.min(1.0, +this.style.opacity+0.1);
-            return;
+        if (this.style.backgroundColor === "") return;
+        let alpha = Math.max(0, +this.style.opacity-0.1);
+        if (alpha == 0) {
+            this.style.backgroundColor = "";
+            this.style.opacity = 1.0;
         }
-        this.style.backgroundColor = picker.value;
-        this.style.opacity = 0.1;
+        else {
+            this.style.opacity = alpha;
+        }
     }
 }
 
@@ -69,6 +76,14 @@ function createGrid(grid_count){
         container.appendChild(square);
     }
     newGridBtn.innerHTML = grid_count + " x " + grid_count;
+}
+
+function resizeGrid(){
+    temp = Math.min(100, parseInt(prompt("Enter grid length: ", "")));
+    if (Number.isNaN(temp)) return;
+    grid_count = temp < 1 ? 1 : temp;
+    clearGrid();
+    createGrid(grid_count);
 }
 
 function refreshGrid(){
@@ -90,15 +105,25 @@ function toggleGrid(){
     }
 }
 
-function toggleDrawMode(){
+function toggleColorMode(){
     if (mode === "rainbow"){
         modeBtn.innerHTML = "Single";
         mode = "single";
-        ui.appendChild(picker);
+        picker.style.display = "initial";
     }else{
         modeBtn.innerHTML = "Rainbow";
         mode = "rainbow";
-        picker.parentNode.removeChild(picker);
+        picker.style.display = "none";
+    }
+}
+
+function togglePen(){
+    if (pen === "draw"){
+        penBtn.innerHTML = "Erase";
+        pen = "erase";
+    }else{
+        penBtn.innerHTML = "Draw";
+        pen = "draw";
     }
 }
 
