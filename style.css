@@ -48,6 +48,12 @@ header a:hover{
     gap: 20px;
 }
 
+#ui input{
+    background-color: white;
+    border: 1px solid black;
+    margin-left: 25px;
+}
+
 #sketch{
     flex: 1;
     display: flex;
