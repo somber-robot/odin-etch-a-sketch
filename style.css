@@ -32,8 +32,11 @@ header a:hover{
 
 #elements{
     display: flex;
-    margin-left: 200px;
-    margin-right: 350px;
+    gap: 15px;
+}
+
+.padding{
+    flex: 2 2 auto;
 }
 
 #ui{
@@ -42,7 +45,6 @@ header a:hover{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 20px;
 }
 
