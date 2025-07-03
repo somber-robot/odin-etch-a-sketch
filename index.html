@@ -9,16 +9,23 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="ui">
-        <button id="new-grid">16 x 16</button>
-        <button id="refresh">Clear grid</button>
-        <button id="toggle-grid">Grid</button>
-        <button id="mode">Rainbow</button>
-        <input type="color" id="picker">
-        <button id="pen">Draw</button>
-        <button id="thick">Shade</button>
-        <button id="save">Download</button>
-    </div>  
-    <div id="container"></div>
+    <header>
+        <h1>Etch-A-Sketch</h1>
+        <a href="https://github.com/somber-robot/odin-etch-a-sketch/" target="_blank">Source Code</a>
+        <a href="https://github.com/somber-robot" target="_blank">Author</a>
+    </header>
+    <div id="elements">
+        <div id="ui">
+            <button id="new-grid">16 x 16</button>
+            <button id="refresh">Clear grid</button>
+            <button id="toggle-grid">Grid lines</button>
+            <button id="mode">Rainbow</button>
+            <input type="color" id="picker">
+            <button id="pen">Draw</button>
+            <button id="thick">Shade</button>
+            <button id="save">Download</button>
+        </div>  
+        <div id="sketch"><div id="container"></div></div>
+    </div>
 </body>
 </html>
